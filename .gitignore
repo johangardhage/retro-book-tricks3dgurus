@@ -1,0 +1,8 @@
+build/
+.vscode/
+error.txt
+bsperror.txt
+md2error.txt
+ERROR.TXT
+BSPERROR.TXT
+MD2ERROR.TXT
