@@ -11,5 +11,29 @@ rule cc
   description = Building executable $out
 
 build $builddir/demo3_2: cc $srcdir/demo3_2.cpp
+build $builddir/demo8_1: cc $srcdir/demo8_1.cpp
+build $builddir/demo8_2: cc $srcdir/demo8_2.cpp
+build $builddir/demo8_2b: cc $srcdir/demo8_2b.cpp
+build $builddir/demo8_3: cc $srcdir/demo8_3.cpp
+build $builddir/demo8_4: cc $srcdir/demo8_4.cpp
+build $builddir/demo8_4_8b: cc $srcdir/demo8_4_8b.cpp
+build $builddir/demo8_5: cc $srcdir/demo8_5.cpp
+build $builddir/demo8_5_8b: cc $srcdir/demo8_5_8b.cpp
+build $builddir/demo8_6: cc $srcdir/demo8_6.cpp
+build $builddir/demo8_6_8b: cc $srcdir/demo8_6_8b.cpp
+build $builddir/demo8_8: cc $srcdir/demo8_8.cpp
+build $builddir/demo8_9: cc $srcdir/demo8_9.cpp
 
 build demo3_2: phony $builddir/demo3_2
+build demo8_1: phony $builddir/demo8_1
+build demo8_2: phony $builddir/demo8_2
+build demo8_2b: phony $builddir/demo8_2b
+build demo8_3: phony $builddir/demo8_3
+build demo8_4: phony $builddir/demo8_4
+build demo8_4_8b: phony $builddir/demo8_4_8b
+build demo8_5: phony $builddir/demo8_5
+build demo8_5_8b: phony $builddir/demo8_5_8b
+build demo8_6: phony $builddir/demo8_6
+build demo8_6_8b: phony $builddir/demo8_6_8b
+build demo8_8: phony $builddir/demo8_8
+build demo8_9: phony $builddir/demo8_9
