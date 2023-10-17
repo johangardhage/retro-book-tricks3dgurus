@@ -10,6 +10,6 @@ rule cc
 #  command = $cc $in $windows -o $out.
   description = Building executable $out
 
-build $builddir/raycast: cc $srcdir/raycast.cpp
+build $builddir/demo3_2: cc $srcdir/demo3_2.cpp
 
-build raycast: phony $builddir/raycast
+build demo3_2: phony $builddir/demo3_2
