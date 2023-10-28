@@ -135,6 +135,64 @@ typedef unsigned int   DWORD;
 typedef long           LONG;
 typedef char           CHAR;
 
+// PaletteEntryFlag Enumeration - MS-WMF
+typedef enum
+{
+	PC_RESERVED = 0x01,
+	PC_EXPLICIT = 0x02,
+	PC_NOCOLLAPSE = 0x04
+} PaletteEntryFlag;
+
+// OFSTRUCT structure (winbase.h)
+typedef struct OFSTRUCT_TYP {
+	BYTE cBytes;
+	BYTE fFixedDisk;
+	WORD nErrCode;
+	WORD Reserved1;
+	WORD Reserved2;
+	CHAR szPathName[128];
+} OFSTRUCT, *LPOFSTRUCT, *POFSTRUCT;
+
+// RECT structure (windef.h)
+typedef struct RECT_TYP {
+	LONG left;
+	LONG top;
+	LONG right;
+	LONG bottom;
+} RECT, *PRECT, *NPRECT, *LPRECT;
+
+// PALETTEENTRY structure (wingdi.h)
+typedef struct PALETTEENTRY_TYP {
+	BYTE peRed;
+	BYTE peGreen;
+	BYTE peBlue;
+	BYTE peFlags;
+} PALETTEENTRY, *PPALETTEENTRY, *LPPALETTEENTRY;
+
+// BITMAPFILEHEADER structure (wingdi.h)
+typedef struct BITMAPFILEHEADER_TYP {
+	WORD  bfType;
+	DWORD bfSize;
+	WORD  bfReserved1;
+	WORD  bfReserved2;
+	DWORD bfOffBits;
+} __attribute__((__packed__)) BITMAPFILEHEADER, *LPBITMAPFILEHEADER, *PBITMAPFILEHEADER;
+
+// BITMAPINFOHEADER structure (wingdi.h)
+typedef struct BITMAPINFOHEADER_TYP {
+	DWORD biSize;
+	DWORD biWidth;
+	DWORD biHeight;
+	WORD  biPlanes;
+	WORD  biBitCount;
+	DWORD biCompression;
+	DWORD biSizeImage;
+	DWORD biXPelsPerMeter;
+	DWORD biYPelsPerMeter;
+	DWORD biClrUsed;
+	DWORD biClrImportant;
+} __attribute__((__packed__)) BITMAPINFOHEADER, *LPBITMAPINFOHEADER, *PBITMAPINFOHEADER;
+
 // container structure for bitmaps .BMP file
 typedef struct BITMAP_FILE_TAG
 {
