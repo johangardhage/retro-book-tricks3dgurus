@@ -48,6 +48,11 @@ build $builddir/demo12_9: cc $srcdir/demo12_9.cpp
 build $builddir/demo12_10: cc $srcdir/demo12_10.cpp
 build $builddir/demo12_11: cc $srcdir/demo12_11.cpp
 build $builddir/demo12_12: cc $srcdir/demo12_12.cpp
+build $builddir/demo13_1: cc $srcdir/demo13_1.cpp
+build $builddir/demo13_2: cc $srcdir/demo13_2.cpp
+build $builddir/demo13_3: cc $srcdir/demo13_3.cpp
+build $builddir/demo13_4: cc $srcdir/demo13_4.cpp
+build $builddir/demo13_5: cc $srcdir/demo13_5.cpp
 
 build demo3_2: phony $builddir/demo3_2
 build demo8_1: phony $builddir/demo8_1
@@ -87,3 +92,8 @@ build demo12_9: phony $builddir/demo12_9
 build demo12_10: phony $builddir/demo12_10
 build demo12_11: phony $builddir/demo12_11
 build demo12_12: phony $builddir/demo12_12
+build demo13_1: phony $builddir/demo13_1
+build demo13_2: phony $builddir/demo13_2
+build demo13_3: phony $builddir/demo13_3
+build demo13_4: phony $builddir/demo13_4
+build demo13_5: phony $builddir/demo13_5
