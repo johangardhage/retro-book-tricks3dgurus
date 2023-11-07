@@ -53,6 +53,13 @@ build $builddir/demo13_2: cc $srcdir/demo13_2.cpp
 build $builddir/demo13_3: cc $srcdir/demo13_3.cpp
 build $builddir/demo13_4: cc $srcdir/demo13_4.cpp
 build $builddir/demo13_5: cc $srcdir/demo13_5.cpp
+build $builddir/demo14_1: cc $srcdir/demo14_1.cpp
+build $builddir/demo14_2: cc $srcdir/demo14_2.cpp
+build $builddir/demo14_3: cc $srcdir/demo14_3.cpp
+build $builddir/demo14_4: cc $srcdir/demo14_4.cpp
+build $builddir/demo14_5: cc $srcdir/demo14_5.cpp
+build $builddir/demo14_6: cc $srcdir/demo14_6.cpp
+build $builddir/demo14_6b: cc $srcdir/demo14_6b.cpp
 
 build demo3_2: phony $builddir/demo3_2
 build demo8_1: phony $builddir/demo8_1
@@ -97,3 +104,10 @@ build demo13_2: phony $builddir/demo13_2
 build demo13_3: phony $builddir/demo13_3
 build demo13_4: phony $builddir/demo13_4
 build demo13_5: phony $builddir/demo13_5
+build demo14_1: phony $builddir/demo14_1
+build demo14_2: phony $builddir/demo14_2
+build demo14_3: phony $builddir/demo14_3
+build demo14_4: phony $builddir/demo14_4
+build demo14_5: phony $builddir/demo14_5
+build demo14_6: phony $builddir/demo14_6
+build demo14_6b: phony $builddir/demo14_6b
