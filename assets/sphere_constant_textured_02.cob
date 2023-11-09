@@ -1272,7 +1272,7 @@ ShBx V0.03 Id 18899733 Parent 18899732 Size 00000522
 Shader class: color
 Shader name: "texture map" (caligari texture)
 Number of parameters: 7
-file name: string "D:\Source\T3dcodeII\tile01.bmp"
+file name: string assets/tile01.bmp
 S repeat: float 1
 T repeat: float 1
 S offset: float 0

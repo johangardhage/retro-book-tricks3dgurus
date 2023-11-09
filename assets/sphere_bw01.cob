@@ -714,7 +714,7 @@ ShBx V0.03 Id 18624133 Parent 18624132 Size 00000663
 Shader class: color
 Shader name: "texture map" (caligari texture)
 Number of parameters: 7
-file name: string "D:\Source\T3dcodeII\checker64.bmp"
+file name: string assets/checker64.bmp
 S repeat: float 1
 T repeat: float 1
 S offset: float 0

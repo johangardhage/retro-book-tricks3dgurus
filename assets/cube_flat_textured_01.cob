@@ -106,7 +106,7 @@ ShBx V0.03 Id 18850517 Parent 18850516 Size 00000584
 Shader class: color
 Shader name: "texture map" (caligari texture)
 Number of parameters: 7
-file name: string "D:\WINXPP Program Files\ts5\Textures\metal04.bmp"
+file name: string assets/metal04.bmp
 S repeat: float 1
 T repeat: float 1
 S offset: float 0

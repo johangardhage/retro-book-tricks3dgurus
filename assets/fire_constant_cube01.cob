@@ -78,7 +78,7 @@ ShBx V0.03 Id 18829541 Parent 18829540 Size 00000522
 Shader class: color
 Shader name: "texture map" (caligari texture)
 Number of parameters: 7
-file name: string "D:\Source\T3dcodeII\lava02.bmp"
+file name: string assets/lava02.bmp
 S repeat: float 1
 T repeat: float 1
 S offset: float 0

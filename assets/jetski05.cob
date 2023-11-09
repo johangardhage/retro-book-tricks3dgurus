@@ -786,7 +786,7 @@ ShBx V0.03 Id 18854421 Parent 18854420 Size 00000569
 Shader class: color
 Shader name: "texture map" (caligari texture)
 Number of parameters: 7
-file name: string "D:\Source\T3dcodeII\jetski256.bmp"
+file name: string assets/jetski256.bmp
 S repeat: float 1
 T repeat: float 1
 S offset: float 0
