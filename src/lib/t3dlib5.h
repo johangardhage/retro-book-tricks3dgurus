@@ -998,8 +998,6 @@ void Transform_OBJECT4DV1(OBJECT4DV1_PTR obj, // object to transform
 		// transform each local/model vertex of the object mesh and store result
 		// in "transformed" vertex list
 		for (int vertex = 0; vertex < obj->num_vertices; vertex++) {
-			POINT4D presult; // hold result of each transformation
-
 			// transform point
 			Mat_Mul_VECTOR4D_4X4(&obj->vlist_local[vertex], mt, &obj->vlist_trans[vertex]);
 
@@ -2483,8 +2481,7 @@ void Build_CAM4DV1_Matrix_UVN(CAM4DV1_PTR cam, int mode)
 	//     as usual
 
 	MATRIX4X4 mt_inv,  // inverse camera translation matrix
-		mt_uvn,  // the final uvn matrix
-		mtmp;    // temporary working matrix
+		mt_uvn;  // the final uvn matrix
 
 	// step 1: create the inverse translation matrix for the camera
 	// position

@@ -283,7 +283,7 @@ typedef struct OBJECT4DV2_TYP
 	int num_polys;           // number of polygons in object mesh
 	POLY4DV2_PTR plist;      // ptr to polygons (new)
 
-	int   ivar1, ivar2;      // auxiliary vars
+	long  ivar1, ivar2;      // auxiliary vars
 	float fvar1, fvar2;      // auxiliary vars
 
 	// METHODS //////////////////////////////////////////////////
@@ -395,10 +395,6 @@ int OBJECT4DV2::Set_Frame(int frame)
 {
 	// this functions sets the current frame in a multi frame object
 	// if the object is not multiframed then the function has no effect
-
-	// test if object is valid?
-	if (!this)
-		return(0);
 
 	// test if its multiframe?
 	if (!(this->attr & OBJECT4DV2_ATTR_MULTI_FRAME))
@@ -757,8 +753,6 @@ void Transform_OBJECT4DV2(OBJECT4DV2_PTR obj,  // object to transform
 			// transform each local/model vertex of the object mesh and store result
 			// in "transformed" vertex list
 			for (int vertex = 0; vertex < obj->num_vertices; vertex++) {
-				POINT4D presult; // hold result of each transformation
-
 				// transform point
 				Mat_Mul_VECTOR4D_4X4(&obj->vlist_local[vertex].v, mt, &obj->vlist_trans[vertex].v);
 
@@ -837,8 +831,6 @@ void Transform_OBJECT4DV2(OBJECT4DV2_PTR obj,  // object to transform
 			// transform each local/model vertex of the object mesh and store result
 			// in "transformed" vertex list
 			for (int vertex = 0; vertex < obj->total_vertices; vertex++) {
-				POINT4D presult; // hold result of each transformation
-
 				// transform point
 				Mat_Mul_VECTOR4D_4X4(&obj->head_vlist_local[vertex].v, mt, &obj->head_vlist_trans[vertex].v);
 
@@ -1778,8 +1770,6 @@ int Insert_OBJECT4DV2_RENDERLIST4DV2(RENDERLIST4DV2_PTR rend_list,
 	// this value is used to overwrite the base color of the 
 	// polygon when its sent to the rendering list
 
-	unsigned int base_color; // save base color of polygon
-
 	// is this objective inactive or culled or invisible?
 	if (!(obj->state & OBJECT4DV2_STATE_ACTIVE) ||
 		(obj->state & OBJECT4DV2_STATE_CULLED) ||
@@ -2129,8 +2119,7 @@ int Light_OBJECT4DV2_World16(OBJECT4DV2_PTR obj,  // object to process
 		r_sum0, g_sum0, b_sum0,
 		r_sum1, g_sum1, b_sum1,
 		r_sum2, g_sum2, b_sum2,
-		ri, gi, bi,
-		shaded_color;            // final color
+		ri, gi, bi;
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -2139,7 +2128,7 @@ int Light_OBJECT4DV2_World16(OBJECT4DV2_PTR obj,  // object to process
 		nl,     // length of normal
 		atten;  // attenuation computations
 
-	VECTOR4D u, v, n, l, d, s; // used for cross product and light vector calculations
+	VECTOR4D u, v, n, l, s; // used for cross product and light vector calculations
 
 	//Write_Error("\nEntering lighting function");
 
@@ -3034,8 +3023,7 @@ int Light_OBJECT4DV2_World(OBJECT4DV2_PTR obj,  // object to process
 		r_sum0, g_sum0, b_sum0,
 		r_sum1, g_sum1, b_sum1,
 		r_sum2, g_sum2, b_sum2,
-		ri, gi, bi,
-		shaded_color;            // final color
+		ri, gi, bi;
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -3044,7 +3032,7 @@ int Light_OBJECT4DV2_World(OBJECT4DV2_PTR obj,  // object to process
 		nl,     // length of normal
 		atten;  // attenuation computations
 
-	VECTOR4D u, v, n, l, d, s; // used for cross product and light vector calculations
+	VECTOR4D u, v, n, l, s; // used for cross product and light vector calculations
 
 	//Write_Error("\nEntering lighting function");
 
@@ -3929,8 +3917,7 @@ int Light_RENDERLIST4DV2_World16(RENDERLIST4DV2_PTR rend_list,  // list to proce
 		r_sum0, g_sum0, b_sum0,
 		r_sum1, g_sum1, b_sum1,
 		r_sum2, g_sum2, b_sum2,
-		ri, gi, bi,
-		shaded_color;            // final color
+		ri, gi, bi;
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -3939,7 +3926,7 @@ int Light_RENDERLIST4DV2_World16(RENDERLIST4DV2_PTR rend_list,  // list to proce
 		nl,     // length of normal
 		atten;  // attenuation computations
 
-	VECTOR4D u, v, n, l, d, s; // used for cross product and light vector calculations
+	VECTOR4D u, v, n, l, s; // used for cross product and light vector calculations
 
 	//Write_Error("\nEntering lighting function");
 
@@ -4824,8 +4811,7 @@ int Light_RENDERLIST4DV2_World(RENDERLIST4DV2_PTR rend_list,  // list to process
 		r_sum0, g_sum0, b_sum0,
 		r_sum1, g_sum1, b_sum1,
 		r_sum2, g_sum2, b_sum2,
-		ri, gi, bi,
-		shaded_color;            // final color
+		ri, gi, bi;
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -4834,7 +4820,7 @@ int Light_RENDERLIST4DV2_World(RENDERLIST4DV2_PTR rend_list,  // list to process
 		nl,     // length of normal
 		atten;  // attenuation computations
 
-	VECTOR4D u, v, n, l, d, s; // used for cross product and light vector calculations
+	VECTOR4D u, v, n, l, s; // used for cross product and light vector calculations
 
 	//Write_Error("\nEntering lighting function");
 
@@ -5940,15 +5926,6 @@ int Load_OBJECT4DV2_COB(OBJECT4DV2_PTR obj,   // pointer to object
 	// create a parser object
 	CPARSERV1 parser;
 
-	char seps[16];          // seperators for token scanning
-	char token_buffer[256]; // used as working buffer for token
-	char *token;            // pointer to next token
-
-	int r, g, b;              // working colors
-
-	// cache for texture vertices
-	VERTEX2DF texture_vertices[OBJECT4DV2_MAX_VERTICES];
-
 	int num_texture_vertices = 0;
 
 	MATRIX4X4 mat_local,  // storage for local transform if user requests it in cob format
@@ -6351,8 +6328,6 @@ int Load_OBJECT4DV2_COB(OBJECT4DV2_PTR obj,   // pointer to object
 	// the ff is the flags, unused for now, has to do with holes
 	// the mm is the material index number 
 
-	int poly_surface_desc = 0; // ASC surface descriptor/material in this case
-	int poly_num_verts = 0; // number of vertices for current poly (always 3)
 	int num_materials_object = 0; // number of materials for this object
 
 	for (int poly = 0; poly < obj->num_polys; poly++) {
@@ -6407,7 +6382,6 @@ int Load_OBJECT4DV2_COB(OBJECT4DV2_PTR obj,   // pointer to object
 
 				// insert polygon, check for winding order invert
 				if (vertex_flags & VERTEX_FLAGS_INVERT_WINDING_ORDER) {
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[4];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[0];
@@ -6444,7 +6418,6 @@ int Load_OBJECT4DV2_COB(OBJECT4DV2_PTR obj,   // pointer to object
 
 				} // end if
 				else { // leave winding order alone
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[0];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[4];
@@ -7257,11 +7230,6 @@ int Load_OBJECT4DV2_3DSASC(OBJECT4DV2_PTR obj,   // pointer to object
 // has to do with the edges and the vertex ordering
 // the material indicates the color, and has an 'a0' tacked on the end???
 
-	int  poly_surface_desc = 0; // ASC surface descriptor/material in this case
-	int  poly_num_verts = 0; // number of vertices for current poly (always 3)
-	char tmp_string[8];         // temp string to hold surface descriptor in and
-	// test if it need to be converted from hex
-
 	for (int poly = 0; poly < obj->num_polys; poly++) {
 		// hunt until next face is found
 		while (1) {
@@ -7282,13 +7250,11 @@ int Load_OBJECT4DV2_3DSASC(OBJECT4DV2_PTR obj,   // pointer to object
 
 				// insert polygon, check for winding order invert
 				if (vertex_flags & VERTEX_FLAGS_INVERT_WINDING_ORDER) {
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[3];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[1];
 				} // end if
 				else { // leave winding order alone
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[1];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[3];
@@ -7436,7 +7402,7 @@ int Load_OBJECT4DV2_3DSASC(OBJECT4DV2_PTR obj,   // pointer to object
 ///////////////////////////////////////////////////////////////////////////////
 
 int Load_OBJECT4DV2_PLG(OBJECT4DV2_PTR obj, // pointer to object
-	char *filename,         // filename of plg file
+	const char *filename,         // filename of plg file
 	VECTOR4D_PTR scale,     // initial scaling factors
 	VECTOR4D_PTR pos,       // initial position
 	VECTOR4D_PTR rot,       // initial rotations
@@ -7759,12 +7725,9 @@ void Draw_Textured_Triangle16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v,
 		du, dv,
 		xi, yi,              // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -7788,7 +7751,6 @@ void Draw_Textured_Triangle16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -8531,12 +8493,9 @@ void Draw_Textured_TriangleFS16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v,
 		du, dv,
 		xi, yi,              // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -8563,7 +8522,6 @@ void Draw_Textured_TriangleFS16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -9382,12 +9340,9 @@ void Draw_Textured_Triangle(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,          // general deltas
-		u, v,
 		du, dv,
 		xi, yi,                  // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -9411,7 +9366,6 @@ void Draw_Textured_Triangle(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	UCHAR *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL;
 
 #ifdef DEBUG_ON
@@ -10150,12 +10104,9 @@ void Draw_Textured_TriangleFS(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,          // general deltas
-		u, v,
 		du, dv,
 		xi, yi,                  // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -10181,7 +10132,6 @@ void Draw_Textured_TriangleFS(POLYF4DV2_PTR face,   // ptr to face
 	int r_base, g_base, b_base, base_rgb444, textel; // used for color modulation algorithm to light texture
 
 	UCHAR *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*lightrow444_8 = NULL;
 
@@ -10943,7 +10893,6 @@ void Draw_Top_Tri2_16(float x1, float y1,
 		xs, xe,       // the starting and ending points of the edges
 		height,      // the height of the triangle
 		temp_x,        // used during sorting as temps
-		temp_y,
 		right,         // used by clipping
 		left;
 
@@ -11101,7 +11050,6 @@ void Draw_Bottom_Tri2_16(float x1, float y1,
 		xs, xe,       // the starting and ending points of the edges
 		height,      // the height of the triangle
 		temp_x,      // used during sorting as temps
-		temp_y,
 		right,       // used by clipping
 		left;
 
@@ -11473,7 +11421,6 @@ void Draw_Bottom_Tri2(float x1, float y1,
 		xs, xe,       // the starting and ending points of the edges
 		height,      // the height of the triangle
 		temp_x,      // used during sorting as temps
-		temp_y,
 		right,       // used by clipping
 		left;
 
@@ -11692,12 +11639,9 @@ void Draw_Gouraud_Triangle16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w,
 		du, dv, dw,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi,           // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -11729,8 +11673,6 @@ void Draw_Gouraud_Triangle16(POLYF4DV2_PTR face,   // ptr to face
 		r_base2, g_base2, b_base2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 #ifdef DEBUG_ON
@@ -12567,12 +12509,9 @@ void Draw_Gouraud_Triangle(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w,
 		du, dv, dw,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi,           // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -12603,9 +12542,7 @@ void Draw_Gouraud_Triangle(POLYF4DV2_PTR face,   // ptr to face
 		r_base1, g_base1, b_base1,
 		r_base2, g_base2, b_base2;
 
-	UCHAR *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL;
+	UCHAR *screen_ptr = NULL;
 
 #ifdef DEBUG_ON
 	// track rendering stats
@@ -13950,7 +13887,7 @@ int Load_Bitmap_PCX_File(BITMAP_FILE_PTR bitmap, char *filename)
 	} // end if couldn't find file
 
 	// load the header
-	for (index = 0; index < sizeof(PCX_HEADER); index++) {
+	for (index = 0; index < (int)sizeof(PCX_HEADER); index++) {
 		((UCHAR *)&pcx_header)[index] = (UCHAR)getc(fp);
 	} // end for index
 

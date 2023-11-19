@@ -228,7 +228,7 @@ MD2_ANIMATION md2_animations[NUM_MD2_ANIMATIONS] =
 };
 
 // ASCII names for debugging
-char *md2_anim_strings[] =
+const char *md2_anim_strings[] =
 {
 "MD2_ANIM_STATE_STANDING_IDLE ",
 "MD2_ANIM_STATE_RUN",
@@ -455,7 +455,7 @@ int Load_Object_MD2(MD2_CONTAINER_PTR obj_md2, // the loaded md2 file placed in 
 	buffer = (UCHAR *)malloc(flength + 1);
 
 	// load data into buffer
-	int bytes_read = fread(buffer, sizeof(UCHAR), flength, fp);
+	fread(buffer, sizeof(UCHAR), flength, fp);
 
 	// the header is the first item in the buffer, so alias a pointer
 	// to it, so we can start analyzing it and creating the model

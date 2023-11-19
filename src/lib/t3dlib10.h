@@ -116,12 +116,9 @@ void Draw_Triangle_2DZB2_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		z,
 		dz,
 		xi, yi,              // the current interpolated x,y
 		zi,                 // the current interpolated z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -141,8 +138,6 @@ void Draw_Triangle_2DZB2_16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -407,7 +402,7 @@ void Draw_Triangle_2DZB2_16(POLYF4DV2_PTR face,   // ptr to face
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel assume 5.6.5
 						screen_ptr[xi] = color;
 
@@ -463,7 +458,7 @@ void Draw_Triangle_2DZB2_16(POLYF4DV2_PTR face,   // ptr to face
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel 5.6.5
 						screen_ptr[xi] = color;
 
@@ -691,7 +686,7 @@ void Draw_Triangle_2DZB2_16(POLYF4DV2_PTR face,   // ptr to face
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = color;
 
@@ -784,7 +779,7 @@ void Draw_Triangle_2DZB2_16(POLYF4DV2_PTR face,   // ptr to face
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = color;
 
@@ -872,12 +867,9 @@ void Draw_Textured_TriangleZB2_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -905,7 +897,6 @@ void Draw_Textured_TriangleZB2_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -1208,7 +1199,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -1276,7 +1267,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -1559,7 +1550,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -1676,7 +1667,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -1783,12 +1774,9 @@ void Draw_Textured_Bilerp_TriangleZB_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -1816,7 +1804,6 @@ void Draw_Textured_Bilerp_TriangleZB_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -2122,7 +2109,7 @@ SWAP(v0, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// compute integral values of u,v
 						int uint = ui >> FIXP16_SHIFT;
 						int vint = vi >> FIXP16_SHIFT;
@@ -2253,7 +2240,7 @@ SWAP(v0, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// compute integral values of u,v
 						int uint = ui >> FIXP16_SHIFT;
 						int vint = vi >> FIXP16_SHIFT;
@@ -2599,7 +2586,7 @@ SWAP(v0, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// compute integral values of u,v
 							int uint = ui >> FIXP16_SHIFT;
 							int vint = vi >> FIXP16_SHIFT;
@@ -2779,7 +2766,7 @@ SWAP(v0, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// compute integral values of u,v
 							int uint = ui >> FIXP16_SHIFT;
 							int vint = vi >> FIXP16_SHIFT;
@@ -2949,12 +2936,9 @@ void Draw_Textured_TriangleFSZB2_16(POLYF4DV2_PTR face, // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,            // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -2985,7 +2969,6 @@ void Draw_Textured_TriangleFSZB2_16(POLYF4DV2_PTR face, // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -3293,7 +3276,7 @@ SWAP(v0, v1, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -3379,7 +3362,7 @@ SWAP(v0, v1, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -3681,7 +3664,7 @@ SWAP(v0, v1, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -3819,7 +3802,7 @@ SWAP(v0, v1, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -3948,12 +3931,9 @@ void Draw_Textured_TriangleGSZB_16(POLYF4DV2_PTR face,   // ptr to face
 
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z, s, t,
 		du, dv, dw, dz, ds, dt,
 		xi, yi,             // the current interpolated x,y
 		ui, vi, wi, zi, si, ti,    // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -4001,7 +3981,6 @@ void Draw_Textured_TriangleGSZB_16(POLYF4DV2_PTR face,   // ptr to face
 	USHORT textel;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -4413,7 +4392,7 @@ SWAP(v1, v2, temp);
 				for (xi = xstart; xi < xend; xi++) {
 					// write textel assume 5.6.5
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// get textel first
 						textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -4529,7 +4508,7 @@ SWAP(v1, v2, temp);
 				for (xi = xstart; xi < xend; xi++) {
 					// write textel assume 5.6.5
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// get textel first
 						textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -4958,7 +4937,7 @@ SWAP(v1, v2, temp);
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// get textel first
 							textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -5148,7 +5127,7 @@ SWAP(v1, v2, temp);
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// get textel first
 							textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -5315,12 +5294,9 @@ void Draw_Gouraud_TriangleZB2_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z,
 		du, dv, dw, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi, zi,        // the current interpolated u,v,w,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -5356,8 +5332,6 @@ void Draw_Gouraud_TriangleZB2_16(POLYF4DV2_PTR face,   // ptr to face
 		r_base2, g_base2, b_base2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -5697,7 +5671,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel assume 5.6.5
 						screen_ptr[xi] = ((ui >> (FIXP16_SHIFT + 3)) << 11) +
 							((vi >> (FIXP16_SHIFT + 2)) << 5) +
@@ -5773,7 +5747,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel 5.6.5
 						screen_ptr[xi] = ((ui >> (FIXP16_SHIFT + 3)) << 11) +
 							((vi >> (FIXP16_SHIFT + 2)) << 5) +
@@ -6089,7 +6063,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = ((ui >> (FIXP16_SHIFT + 3)) << 11) +
 								((vi >> (FIXP16_SHIFT + 2)) << 5) +
@@ -6220,7 +6194,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = ((ui >> (FIXP16_SHIFT + 3)) << 11) +
 								((vi >> (FIXP16_SHIFT + 2)) << 5) +
@@ -6334,10 +6308,8 @@ void Draw_Triangle_2D3_16(POLYF4DV2_PTR face,   // ptr to face
 		tri_type = TRI_TYPE_NONE,
 		irestart = INTERP_LHS;
 
-	int dx, dy, dyl, dyr,      // general deltas
+	int dy, dyl, dyr,      // general deltas
 		xi, yi,              // the current interpolated x,y
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -6353,8 +6325,6 @@ void Draw_Triangle_2D3_16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	USHORT color;    // polygon color
@@ -6553,15 +6523,10 @@ SWAP(v1, v2, temp);
 				xstart = ((xl + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 				xend = ((xr + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 
-				dx = (xend - xstart);
-
 				///////////////////////////////////////////////////////////////////////
 
 				// test for x clipping, LHS
 				if (xstart < min_clip_x) {
-					// compute x overlap
-					dx = min_clip_x - xstart;
-
 					// reset vars
 					xstart = min_clip_x;
 
@@ -6599,8 +6564,6 @@ SWAP(v1, v2, temp);
 				// compute span endpoints
 				xstart = ((xl + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 				xend = ((xr + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
-
-				dx = (xend - xstart);
 
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
@@ -6756,15 +6719,10 @@ SWAP(v1, v2, temp);
 					xstart = ((xl + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 					xend = ((xr + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 
-					dx = (xend - xstart);
-
 					///////////////////////////////////////////////////////////////////////
 
 					// test for x clipping, LHS
 					if (xstart < min_clip_x) {
-						// compute x overlap
-						dx = min_clip_x - xstart;
-
 						// set x to left clip edge
 						xstart = min_clip_x;
 
@@ -6835,8 +6793,6 @@ SWAP(v1, v2, temp);
 					xstart = ((xl + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 					xend = ((xr + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 
-					dx = (xend - xstart);
-
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
@@ -6905,12 +6861,9 @@ void Draw_Textured_Triangle2_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v,
 		du, dv,
 		xi, yi,              // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -6934,7 +6887,6 @@ void Draw_Textured_Triangle2_16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -7687,12 +7639,9 @@ void Draw_Textured_Bilerp_Triangle_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v,
 		du, dv,
 		xi, yi,              // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -7716,7 +7665,6 @@ void Draw_Textured_Bilerp_Triangle_16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -8725,12 +8673,9 @@ void Draw_Textured_TriangleFS2_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v,
 		du, dv,
 		xi, yi,              // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -8757,7 +8702,6 @@ void Draw_Textured_TriangleFS2_16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -9589,12 +9533,9 @@ void Draw_Textured_Perspective_Triangle_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -9622,7 +9563,6 @@ void Draw_Textured_Perspective_Triangle_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -10452,12 +10392,9 @@ void Draw_Textured_PerspectiveLP_Triangle_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -10487,7 +10424,6 @@ void Draw_Textured_PerspectiveLP_Triangle_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -11343,12 +11279,9 @@ void Draw_Textured_Perspective_Triangle_FS_16(POLYF4DV2_PTR face,  // ptr to fac
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -11376,7 +11309,6 @@ void Draw_Textured_Perspective_Triangle_FS_16(POLYF4DV2_PTR face,  // ptr to fac
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -12289,12 +12221,9 @@ void Draw_Textured_PerspectiveLP_Triangle_FS_16(POLYF4DV2_PTR face,  // ptr to f
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -12324,7 +12253,6 @@ void Draw_Textured_PerspectiveLP_Triangle_FS_16(POLYF4DV2_PTR face,  // ptr to f
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -13259,12 +13187,9 @@ void Draw_Textured_TriangleGS_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, s, t,
 		du, dv, dw, ds, dt,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi, si, ti,    // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -13308,7 +13233,6 @@ void Draw_Textured_TriangleGS_16(POLYF4DV2_PTR face,   // ptr to face
 	USHORT textel;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -14533,12 +14457,9 @@ void Draw_Gouraud_Triangle2_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w,
 		du, dv, dw,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi,           // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -14570,8 +14491,6 @@ void Draw_Gouraud_Triangle2_16(POLYF4DV2_PTR face,   // ptr to face
 		r_base2, g_base2, b_base2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 #ifdef DEBUG_ON
@@ -15420,10 +15339,8 @@ void Draw_Triangle_2D_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 		tri_type = TRI_TYPE_NONE,
 		irestart = INTERP_LHS;
 
-	int dx, dy, dyl, dyr,      // general deltas
+	int dy, dyl, dyr,      // general deltas
 		xi, yi,              // the current interpolated x,y
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -15439,12 +15356,7 @@ void Draw_Triangle_2D_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
-
-	USHORT  r_src1, g_src1, b_src1,
-		r_src2, g_src2, b_src2;
 
 	USHORT color;    // polygon color
 
@@ -15646,15 +15558,10 @@ SWAP(v0, v2, temp);
 				xstart = ((xl + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 				xend = ((xr + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 
-				dx = (xend - xstart);
-
 				///////////////////////////////////////////////////////////////////////
 
 				// test for x clipping, LHS
 				if (xstart < min_clip_x) {
-					// compute x overlap
-					dx = min_clip_x - xstart;
-
 					// reset vars
 					xstart = min_clip_x;
 
@@ -15693,8 +15600,6 @@ SWAP(v0, v2, temp);
 				// compute span endpoints
 				xstart = ((xl + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 				xend = ((xr + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
-
-				dx = (xend - xstart);
 
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
@@ -15850,15 +15755,10 @@ SWAP(v0, v2, temp);
 					xstart = ((xl + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 					xend = ((xr + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 
-					dx = (xend - xstart);
-
 					///////////////////////////////////////////////////////////////////////
 
 					// test for x clipping, LHS
 					if (xstart < min_clip_x) {
-						// compute x overlap
-						dx = min_clip_x - xstart;
-
 						// set x to left clip edge
 						xstart = min_clip_x;
 
@@ -15929,8 +15829,6 @@ SWAP(v0, v2, temp);
 					xstart = ((xl + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 					xend = ((xr + FIXP16_ROUND_UP) >> FIXP16_SHIFT);
 
-					dx = (xend - xstart);
-
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
@@ -15999,12 +15897,9 @@ void Draw_Textured_Triangle_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v,
 		du, dv,
 		xi, yi,              // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -16028,7 +15923,6 @@ void Draw_Textured_Triangle_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -16793,12 +16687,9 @@ void Draw_Textured_TriangleFS_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v,
 		du, dv,
 		xi, yi,              // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -16825,7 +16716,6 @@ void Draw_Textured_TriangleFS_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -17675,12 +17565,9 @@ void Draw_Textured_TriangleGS_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, s, t,
 		du, dv, dw, ds, dt,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi, si, ti,    // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -17724,7 +17611,6 @@ void Draw_Textured_TriangleGS_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 	USHORT textel;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -18952,12 +18838,9 @@ void Draw_Gouraud_Triangle_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w,
 		du, dv, dw,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi,           // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -18989,8 +18872,6 @@ void Draw_Gouraud_Triangle_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		r_base2, g_base2, b_base2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 #ifdef DEBUG_ON
@@ -19845,12 +19726,9 @@ void Draw_Triangle_2DZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		z,
 		dz,
 		xi, yi,              // the current interpolated x,y
 		zi,                 // the current interpolated z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -19870,8 +19748,6 @@ void Draw_Triangle_2DZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -20140,7 +20016,7 @@ SWAP(v0, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel assume 5.6.5
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] + alpha_table_src2[color];
 
@@ -20196,7 +20072,7 @@ SWAP(v0, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel 5.6.5
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] + alpha_table_src2[color];
 
@@ -20424,7 +20300,7 @@ SWAP(v0, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] + alpha_table_src2[color];
 
@@ -20517,7 +20393,7 @@ SWAP(v0, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] + alpha_table_src2[color];
 
@@ -20606,12 +20482,9 @@ void Draw_Textured_TriangleZB_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -20639,7 +20512,6 @@ void Draw_Textured_TriangleZB_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -20946,7 +20818,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)]];
@@ -21016,7 +20888,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)]];
@@ -21300,7 +21172,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)]];
@@ -21419,7 +21291,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)]];
@@ -21529,12 +21401,9 @@ void Draw_Textured_TriangleFSZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,            // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -21565,7 +21434,6 @@ void Draw_Textured_TriangleFSZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -21877,7 +21745,7 @@ void Draw_Textured_TriangleFSZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -21965,7 +21833,7 @@ void Draw_Textured_TriangleFSZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -22269,7 +22137,7 @@ void Draw_Textured_TriangleFSZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -22408,7 +22276,7 @@ void Draw_Textured_TriangleFSZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -22537,12 +22405,9 @@ void Draw_Textured_TriangleGSZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z, s, t,
 		du, dv, dw, dz, ds, dt,
 		xi, yi,             // the current interpolated x,y
 		ui, vi, wi, zi, si, ti,    // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -22589,7 +22454,6 @@ void Draw_Textured_TriangleGSZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 	USHORT textel;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -23005,7 +22869,7 @@ SWAP(v1, v2, temp);
 				for (xi = xstart; xi < xend; xi++) {
 					// write textel assume 5.6.5
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// get textel first
 						textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -23122,7 +22986,7 @@ SWAP(v1, v2, temp);
 				for (xi = xstart; xi < xend; xi++) {
 					// write textel assume 5.6.5
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// get textel first
 						textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -23552,7 +23416,7 @@ SWAP(v1, v2, temp);
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// get textel first
 							textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -23743,7 +23607,7 @@ SWAP(v1, v2, temp);
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// get textel first
 							textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -23912,12 +23776,9 @@ void Draw_Gouraud_TriangleZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z,
 		du, dv, dw, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi, zi,        // the current interpolated u,v,w,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -23953,8 +23814,6 @@ void Draw_Gouraud_TriangleZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		r_base2, g_base2, b_base2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -24298,7 +24157,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel assume 5.6.5
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[((ui >> (FIXP16_SHIFT + 3)) << 11) + ((vi >> (FIXP16_SHIFT + 2)) << 5) + (wi >> (FIXP16_SHIFT + 3))];
@@ -24374,7 +24233,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi < z_ptr[xi]) {
+					if ((unsigned int)zi < z_ptr[xi]) {
 						// write textel 5.6.5
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[((ui >> (FIXP16_SHIFT + 3)) << 11) + ((vi >> (FIXP16_SHIFT + 2)) << 5) + (wi >> (FIXP16_SHIFT + 3))];
@@ -24690,7 +24549,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[((ui >> (FIXP16_SHIFT + 3)) << 11) + ((vi >> (FIXP16_SHIFT + 2)) << 5) + (wi >> (FIXP16_SHIFT + 3))];
@@ -24821,7 +24680,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[((ui >> (FIXP16_SHIFT + 3)) << 11) + ((vi >> (FIXP16_SHIFT + 2)) << 5) + (wi >> (FIXP16_SHIFT + 3))];
@@ -24940,12 +24799,9 @@ void Draw_Textured_TriangleINVZB_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -24973,7 +24829,6 @@ void Draw_Textured_TriangleINVZB_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -25279,7 +25134,7 @@ void Draw_Textured_TriangleINVZB_16(POLYF4DV2_PTR face,  // ptr to face
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -25347,7 +25202,7 @@ void Draw_Textured_TriangleINVZB_16(POLYF4DV2_PTR face,  // ptr to face
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -25630,7 +25485,7 @@ void Draw_Textured_TriangleINVZB_16(POLYF4DV2_PTR face,  // ptr to face
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -25747,7 +25602,7 @@ void Draw_Textured_TriangleINVZB_16(POLYF4DV2_PTR face,  // ptr to face
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -25854,12 +25709,9 @@ void Draw_Textured_Bilerp_TriangleINVZB_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -25887,7 +25739,6 @@ void Draw_Textured_Bilerp_TriangleINVZB_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -26196,7 +26047,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// compute integral values of u,v
 						int uint = ui >> FIXP16_SHIFT;
 						int vint = vi >> FIXP16_SHIFT;
@@ -26327,7 +26178,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// compute integral values of u,v
 						int uint = ui >> FIXP16_SHIFT;
@@ -26674,7 +26525,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// compute integral values of u,v
 							int uint = ui >> FIXP16_SHIFT;
 							int vint = vi >> FIXP16_SHIFT;
@@ -26854,7 +26705,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// compute integral values of u,v
 							int uint = ui >> FIXP16_SHIFT;
@@ -27030,12 +26881,9 @@ void Draw_Textured_Perspective_Triangle_INVZB_16(POLYF4DV2_PTR face,  // ptr to 
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -27063,7 +26911,6 @@ void Draw_Textured_Perspective_Triangle_INVZB_16(POLYF4DV2_PTR face,  // ptr to 
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -27361,7 +27208,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
 						//screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -27430,7 +27277,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
 						//screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -27715,7 +27562,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
 							//screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -27833,7 +27680,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
 							//screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -27945,12 +27792,9 @@ void Draw_Textured_PerspectiveLP_Triangle_INVZB_16(POLYF4DV2_PTR face,  // ptr t
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -27980,7 +27824,6 @@ void Draw_Textured_PerspectiveLP_Triangle_INVZB_16(POLYF4DV2_PTR face,  // ptr t
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -28287,7 +28130,7 @@ SWAP(v0, v1, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
 
@@ -28362,7 +28205,7 @@ SWAP(v0, v1, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
 
@@ -28654,7 +28497,7 @@ SWAP(v0, v1, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
 
@@ -28777,7 +28620,7 @@ SWAP(v0, v1, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
 
@@ -28888,12 +28731,9 @@ void Draw_Textured_Perspective_Triangle_FSINVZB_16(POLYF4DV2_PTR face,  // ptr t
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -28921,7 +28761,6 @@ void Draw_Textured_Perspective_Triangle_FSINVZB_16(POLYF4DV2_PTR face,  // ptr t
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -29227,7 +29066,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
@@ -29314,7 +29153,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
@@ -29616,7 +29455,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
@@ -29751,7 +29590,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
@@ -29880,12 +29719,9 @@ void Draw_Textured_PerspectiveLP_Triangle_FSINVZB_16(POLYF4DV2_PTR face,  // ptr
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -29915,7 +29751,6 @@ void Draw_Textured_PerspectiveLP_Triangle_FSINVZB_16(POLYF4DV2_PTR face,  // ptr
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -30228,7 +30063,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
@@ -30321,7 +30156,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
@@ -30629,7 +30464,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
@@ -30770,7 +30605,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
@@ -30895,12 +30730,9 @@ void Draw_Triangle_2DINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		z,
 		dz,
 		xi, yi,              // the current interpolated x,y
 		zi,                 // the current interpolated z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -30920,8 +30752,6 @@ void Draw_Triangle_2DINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -31186,7 +31016,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel assume 5.6.5
 						screen_ptr[xi] = color;
 
@@ -31242,7 +31072,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel 5.6.5
 						screen_ptr[xi] = color;
 
@@ -31468,7 +31298,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = color;
 
@@ -31561,7 +31391,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = color;
 
@@ -31649,12 +31479,9 @@ void Draw_Textured_TriangleFSINVZB_16(POLYF4DV2_PTR face, // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,            // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -31685,7 +31512,6 @@ void Draw_Textured_TriangleFSINVZB_16(POLYF4DV2_PTR face, // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -31993,7 +31819,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> (FIXP16_SHIFT)) + ((vi >> (FIXP16_SHIFT)) << texture_shift2)];
@@ -32079,7 +31905,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> (FIXP16_SHIFT)) + ((vi >> (FIXP16_SHIFT)) << texture_shift2)];
@@ -32381,7 +32207,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> (FIXP16_SHIFT)) + ((vi >> (FIXP16_SHIFT)) << texture_shift2)];
@@ -32517,7 +32343,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> (FIXP16_SHIFT)) + ((vi >> (FIXP16_SHIFT)) << texture_shift2)];
@@ -32645,12 +32471,9 @@ void Draw_Textured_TriangleGSINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z, s, t,
 		du, dv, dw, dz, ds, dt,
 		xi, yi,             // the current interpolated x,y
 		ui, vi, wi, zi, si, ti,    // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -32698,7 +32521,6 @@ void Draw_Textured_TriangleGSINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 	USHORT textel;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -33108,7 +32930,7 @@ void Draw_Textured_TriangleGSINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 				for (xi = xstart; xi < xend; xi++) {
 					// write textel assume 5.6.5
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// get textel first
 						textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -33224,7 +33046,7 @@ void Draw_Textured_TriangleGSINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 				for (xi = xstart; xi < xend; xi++) {
 					// write textel assume 5.6.5
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// get textel first
 						textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -33653,7 +33475,7 @@ void Draw_Textured_TriangleGSINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// get textel first
 							textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -33842,7 +33664,7 @@ void Draw_Textured_TriangleGSINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// get textel first
 							textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -34009,12 +33831,9 @@ void Draw_Gouraud_TriangleINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z,
 		du, dv, dw, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi, zi,        // the current interpolated u,v,w,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -34050,8 +33869,6 @@ void Draw_Gouraud_TriangleINVZB_16(POLYF4DV2_PTR face,   // ptr to face
 		r_base2, g_base2, b_base2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -34390,7 +34207,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel assume 5.6.5
 						screen_ptr[xi] = ((ui >> (FIXP16_SHIFT + 3)) << 11) +
 							((vi >> (FIXP16_SHIFT + 2)) << 5) +
@@ -34466,7 +34283,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel 5.6.5
 						screen_ptr[xi] = ((ui >> (FIXP16_SHIFT + 3)) << 11) +
 							((vi >> (FIXP16_SHIFT + 2)) << 5) +
@@ -34782,7 +34599,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = ((ui >> (FIXP16_SHIFT + 3)) << 11) +
 								((vi >> (FIXP16_SHIFT + 2)) << 5) +
@@ -34913,7 +34730,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = ((ui >> (FIXP16_SHIFT + 3)) << 11) +
 								((vi >> (FIXP16_SHIFT + 2)) << 5) +
@@ -35035,12 +34852,9 @@ void Draw_Triangle_2DINVZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		z,
 		dz,
 		xi, yi,              // the current interpolated x,y
 		zi,                 // the current interpolated z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -35060,8 +34874,6 @@ void Draw_Triangle_2DINVZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -35331,7 +35143,7 @@ SWAP(v0, v1, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel assume 5.6.5
 						// screen_ptr[xi] = color;
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] + alpha_table_src2[color];
@@ -35388,7 +35200,7 @@ SWAP(v0, v1, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel 5.6.5
 						// screen_ptr[xi] = color;
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] + alpha_table_src2[color];
@@ -35615,7 +35427,7 @@ SWAP(v0, v1, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel assume 5.6.5
 							// screen_ptr[xi] = color;
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] + alpha_table_src2[color];
@@ -35709,7 +35521,7 @@ SWAP(v0, v1, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel assume 5.6.5
 							// screen_ptr[xi] = color;
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] + alpha_table_src2[color];
@@ -35800,12 +35612,9 @@ void Draw_Textured_TriangleINVZB_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -35833,7 +35642,6 @@ void Draw_Textured_TriangleINVZB_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -36143,7 +35951,7 @@ void Draw_Textured_TriangleINVZB_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						//screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
@@ -36214,7 +36022,7 @@ void Draw_Textured_TriangleINVZB_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						//screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
@@ -36499,7 +36307,7 @@ void Draw_Textured_TriangleINVZB_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							//screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
@@ -36618,7 +36426,7 @@ void Draw_Textured_TriangleINVZB_Alpha16(POLYF4DV2_PTR face,  // ptr to face
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							//screen_ptr[xi] = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
@@ -36732,12 +36540,9 @@ void Draw_Textured_Perspective_Triangle_INVZB_Alpha16(POLYF4DV2_PTR face,  // pt
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -36765,7 +36570,6 @@ void Draw_Textured_Perspective_Triangle_INVZB_Alpha16(POLYF4DV2_PTR face,  // pt
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -37068,7 +36872,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) +
@@ -37138,7 +36942,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) +
@@ -37424,7 +37228,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) +
@@ -37543,7 +37347,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) +
@@ -37657,12 +37461,9 @@ void Draw_Textured_PerspectiveLP_Triangle_INVZB_Alpha16(POLYF4DV2_PTR face,  // 
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -37692,7 +37493,6 @@ void Draw_Textured_PerspectiveLP_Triangle_INVZB_Alpha16(POLYF4DV2_PTR face,  // 
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -38001,7 +37801,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[textmap[(ui >> FIXP22_SHIFT) +
@@ -38077,7 +37877,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[textmap[(ui >> FIXP22_SHIFT) +
@@ -38369,7 +38169,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[textmap[(ui >> FIXP22_SHIFT) +
@@ -38494,7 +38294,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[textmap[(ui >> FIXP22_SHIFT) +
@@ -38608,12 +38408,9 @@ void Draw_Textured_Perspective_Triangle_FSINVZB_Alpha16(POLYF4DV2_PTR face,  // 
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -38641,7 +38438,6 @@ void Draw_Textured_Perspective_Triangle_FSINVZB_Alpha16(POLYF4DV2_PTR face,  // 
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -38951,7 +38747,7 @@ SWAP(v0, v1, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
@@ -39039,7 +38835,7 @@ SWAP(v0, v1, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
@@ -39342,7 +39138,7 @@ SWAP(v0, v1, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
@@ -39478,7 +39274,7 @@ SWAP(v0, v1, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[((ui << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) + (((vi << (FIXP28_SHIFT - FIXP22_SHIFT)) / zi) << texture_shift2)];
@@ -39610,12 +39406,9 @@ void Draw_Textured_PerspectiveLP_Triangle_FSINVZB_Alpha16(POLYF4DV2_PTR face,  /
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -39645,7 +39438,6 @@ void Draw_Textured_PerspectiveLP_Triangle_FSINVZB_Alpha16(POLYF4DV2_PTR face,  /
 	int ur2, ul2, vr2, vl2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -39961,7 +39753,7 @@ SWAP(v0, v1, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
@@ -40055,7 +39847,7 @@ SWAP(v0, v1, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
@@ -40365,7 +40157,7 @@ SWAP(v0, v1, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
@@ -40507,7 +40299,7 @@ SWAP(v0, v1, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP22_SHIFT) + ((vi >> FIXP22_SHIFT) << texture_shift2)];
@@ -40635,12 +40427,9 @@ void Draw_Textured_TriangleFSINVZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,            // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -40671,7 +40460,6 @@ void Draw_Textured_TriangleFSINVZB_Alpha16(POLYF4DV2_PTR face, // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -40985,7 +40773,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -41073,7 +40861,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel
 						// get textel first
 						textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -41376,7 +41164,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -41513,7 +41301,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel
 							// get textel first
 							textel = textmap[(ui >> FIXP16_SHIFT) + ((vi >> FIXP16_SHIFT) << texture_shift2)];
@@ -41643,12 +41431,9 @@ void Draw_Textured_TriangleGSINVZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z, s, t,
 		du, dv, dw, dz, ds, dt,
 		xi, yi,             // the current interpolated x,y
 		ui, vi, wi, zi, si, ti,    // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -41696,7 +41481,6 @@ void Draw_Textured_TriangleGSINVZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 	USHORT textel;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -42111,7 +41895,7 @@ SWAP(v0, v1, temp);
 				for (xi = xstart; xi < xend; xi++) {
 					// write textel assume 5.6.5
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// get textel first
 						textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -42230,7 +42014,7 @@ SWAP(v0, v1, temp);
 				for (xi = xstart; xi < xend; xi++) {
 					// write textel assume 5.6.5
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// get textel first
 						textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -42660,7 +42444,7 @@ SWAP(v0, v1, temp);
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// get textel first
 							textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -42850,7 +42634,7 @@ SWAP(v0, v1, temp);
 					for (xi = xstart; xi < xend; xi++) {
 						// write textel assume 5.6.5
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// get textel first
 							textel = textmap[(si >> FIXP16_SHIFT) + ((ti >> FIXP16_SHIFT) << texture_shift2)];
 
@@ -43019,12 +42803,9 @@ void Draw_Gouraud_TriangleINVZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z,
 		du, dv, dw, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi, zi,        // the current interpolated u,v,w,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -43060,8 +42841,6 @@ void Draw_Gouraud_TriangleINVZB_Alpha16(POLYF4DV2_PTR face,   // ptr to face
 		r_base2, g_base2, b_base2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -43405,7 +43184,7 @@ SWAP(v1, v2, temp);
 				// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel assume 5.6.5
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[((ui >> (FIXP16_SHIFT + 3)) << 11) +
@@ -43482,7 +43261,7 @@ SWAP(v1, v2, temp);
 			// draw span
 				for (xi = xstart; xi < xend; xi++) {
 					// test if z of current pixel is nearer than current z buffer value
-					if (zi > z_ptr[xi]) {
+					if ((unsigned int)zi > z_ptr[xi]) {
 						// write textel 5.6.5
 						screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 							alpha_table_src2[((ui >> (FIXP16_SHIFT + 3)) << 11) +
@@ -43799,7 +43578,7 @@ SWAP(v1, v2, temp);
 					// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[((ui >> (FIXP16_SHIFT + 3)) << 11) +
@@ -43930,7 +43709,7 @@ SWAP(v1, v2, temp);
 				// draw span
 					for (xi = xstart; xi < xend; xi++) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi > z_ptr[xi]) {
+						if ((unsigned int)zi > z_ptr[xi]) {
 							// write textel assume 5.6.5
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[((ui >> (FIXP16_SHIFT + 3)) << 11) +
@@ -46646,15 +46425,6 @@ int Load_OBJECT4DV2_COB2(OBJECT4DV2_PTR obj,   // pointer to object
 	// create a parser object
 	CPARSERV1 parser;
 
-	char seps[16];          // seperators for token scanning
-	char token_buffer[256]; // used as working buffer for token
-	char *token;            // pointer to next token
-
-	int r, g, b;              // working colors
-
-	// cache for texture vertices
-	VERTEX2DF texture_vertices[OBJECT4DV2_MAX_VERTICES];
-
 	int num_texture_vertices = 0;
 
 	MATRIX4X4 mat_local,  // storage for local transform if user requests it in cob format
@@ -47057,8 +46827,6 @@ int Load_OBJECT4DV2_COB2(OBJECT4DV2_PTR obj,   // pointer to object
 	// the ff is the flags, unused for now, has to do with holes
 	// the mm is the material index number 
 
-	int poly_surface_desc = 0; // ASC surface descriptor/material in this case
-	int poly_num_verts = 0; // number of vertices for current poly (always 3)
 	int num_materials_object = 0; // number of materials for this object
 
 	for (int poly = 0; poly < obj->num_polys; poly++) {
@@ -47114,7 +46882,6 @@ int Load_OBJECT4DV2_COB2(OBJECT4DV2_PTR obj,   // pointer to object
 
 				// insert polygon, check for winding order invert
 				if (vertex_flags & VERTEX_FLAGS_INVERT_WINDING_ORDER) {
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[4];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[0];
@@ -47151,7 +46918,6 @@ int Load_OBJECT4DV2_COB2(OBJECT4DV2_PTR obj,   // pointer to object
 
 				} // end if
 				else { // leave winding order alone
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[0];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[4];
@@ -47861,8 +47627,8 @@ int Generate_Terrain2_OBJECT4DV2(OBJECT4DV2_PTR obj,     // pointer to object
 	float twidth,            // width in world coords on x-axis
 	float theight,           // height (length) in world coords on z-axis
 	float vscale,           // vertical scale of terrain
-	char *height_map_file,  // filename of height bitmap encoded in 256 colors
-	char *texture_map_file, // filename of texture map
+	const char *height_map_file,  // filename of height bitmap encoded in 256 colors
+	const char *texture_map_file, // filename of texture map
 	int rgbcolor,           // color of terrain if no texture        
 	VECTOR4D_PTR pos,       // initial position
 	VECTOR4D_PTR rot,       // initial rotations
@@ -47884,8 +47650,6 @@ int Generate_Terrain2_OBJECT4DV2(OBJECT4DV2_PTR obj,     // pointer to object
 	// this version allows transparency control for "sea level", if transparency is 
 	// desired to create transparent water, send a non negative for alpha
 	// alpha must be between 0 and 255, 255.0 being fully opaque
-
-	char buffer[256];  // working buffer
 
 	float col_tstep, row_tstep;
 	float col_vstep, row_vstep;

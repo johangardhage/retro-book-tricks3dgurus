@@ -2701,10 +2701,9 @@ int Load_Bitmap_File(BITMAP_FILE_PTR bitmap, const char *filename)
 	// this function opens a bitmap file and loads the data into bitmap
 
 	FILE *file_handle;  // the file handle
-	int index;        // looping index
+	unsigned int index;        // looping index
 
 	UCHAR *temp_buffer = NULL; // used to convert 24 bit images to 16 bit
-	OFSTRUCT file_data;          // the file data information
 
 	// open the file if it exists
 	if ((file_handle = fopen(filename, "rb")) == NULL)
@@ -3054,7 +3053,6 @@ void Screen_Transitions(int effect, UCHAR *vbuffer, int lpitch)
 
 	PALETTEENTRY color;              // temporary color
 	PALETTEENTRY work_palette[MAX_COLORS_PALETTE];  // used as a working palette
-	PALETTEENTRY work_color;         // used in color algorithms
 
 	// test which screen effect is being selected
 	switch (effect) {
@@ -5718,7 +5716,7 @@ int Translate_Polygon2D_Mat(POLYGON2D_PTR poly, int dx, int dy)
 	Mat_Init_3X2(&mt, 1, 0, 0, 1, dx, dy);
 
 	// create a 1x2 matrix to do the transform
-	MATRIX1X2 p0 = { poly->x0, poly->y0 };
+	MATRIX1X2 p0 = { (float)poly->x0, (float)poly->y0 };
 	MATRIX1X2 p1 = { 0,0 }; // this will hold result
 
 	// now translate via a matrix multiply

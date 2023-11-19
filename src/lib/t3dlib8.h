@@ -99,16 +99,15 @@ void Clip_Polys_RENDERLIST4DV2(RENDERLIST4DV2_PTR rend_list, CAM4DV1_PTR cam, in
 		t1, t2,                         // parametric t values
 		ui, vi, u01i, v01i, u02i, v02i; // texture intersection points
 
-	int last_poly_index,            // last valid polygon in polylist
-		insert_poly_index;          // the current position new polygons are inserted at
+	int last_poly_index;            // last valid polygon in polylist
 
 	VECTOR4D u, v, n;                 // used in vector calculations
 
 	POLYF4DV2 temp_poly;            // used when we need to split a poly into 2 polys
 
-	// set last, current insert index to end of polygon list
+	// set last index to end of polygon list
 	// we don't want to clip poly's two times
-	insert_poly_index = last_poly_index = rend_list->num_polys;
+	last_poly_index = rend_list->num_polys;
 
 	// traverse polygon list and clip/cull polygons
 	for (int poly = 0; poly < last_poly_index; poly++) {
@@ -591,8 +590,6 @@ int Generate_Terrain_OBJECT4DV2(OBJECT4DV2_PTR obj,     // pointer to object
 	// also if there is a texture map file then it will be mapped onto the terrain
 	// and texture coordinates will be generated
 
-	char buffer[256];  // working buffer
-
 	float col_tstep, row_tstep;
 	float col_vstep, row_vstep;
 	int columns, rows;
@@ -939,15 +936,11 @@ int Reset_Lights_LIGHTV2(LIGHTV2_PTR lights,       // light array to work with (
 	int max_lights)           // number of lights in system
 {
 	// this function simply resets all lights in the system
-	static int first_time = 1;
 
 	memset(lights, 0, max_lights * sizeof(LIGHTV2));
 
 	// reset number of lights global
 	num_lights = 0;
-
-	// reset first time
-	first_time = 0;
 
 	// return success
 	return(1);
@@ -981,8 +974,7 @@ int Light_OBJECT4DV2_World2_16(OBJECT4DV2_PTR obj,  // object to process
 		r_sum0, g_sum0, b_sum0,
 		r_sum1, g_sum1, b_sum1,
 		r_sum2, g_sum2, b_sum2,
-		ri, gi, bi,
-		shaded_color;            // final color
+		ri, gi, bi;
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -991,7 +983,7 @@ int Light_OBJECT4DV2_World2_16(OBJECT4DV2_PTR obj,  // object to process
 		nl,     // length of normal
 		atten;  // attenuation computations
 
-	VECTOR4D u, v, n, l, d, s; // used for cross product and light vector calculations
+	VECTOR4D u, v, n, l, s; // used for cross product and light vector calculations
 
 	//Write_Error("\nEntering lighting function");
 
@@ -1886,8 +1878,7 @@ int Light_OBJECT4DV2_World2(OBJECT4DV2_PTR obj,  // object to process
 		r_sum0, g_sum0, b_sum0,
 		r_sum1, g_sum1, b_sum1,
 		r_sum2, g_sum2, b_sum2,
-		ri, gi, bi,
-		shaded_color;            // final color
+		ri, gi, bi;
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -1896,7 +1887,7 @@ int Light_OBJECT4DV2_World2(OBJECT4DV2_PTR obj,  // object to process
 		nl,     // length of normal
 		atten;  // attenuation computations
 
-	VECTOR4D u, v, n, l, d, s; // used for cross product and light vector calculations
+	VECTOR4D u, v, n, l, s; // used for cross product and light vector calculations
 
 	//Write_Error("\nEntering lighting function");
 
@@ -2781,8 +2772,7 @@ int Light_RENDERLIST4DV2_World2_16(RENDERLIST4DV2_PTR rend_list,  // list to pro
 		r_sum0, g_sum0, b_sum0,
 		r_sum1, g_sum1, b_sum1,
 		r_sum2, g_sum2, b_sum2,
-		ri, gi, bi,
-		shaded_color;            // final color
+		ri, gi, bi;
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -2791,7 +2781,7 @@ int Light_RENDERLIST4DV2_World2_16(RENDERLIST4DV2_PTR rend_list,  // list to pro
 		nl,     // length of normal
 		atten;  // attenuation computations
 
-	VECTOR4D u, v, n, l, d, s; // used for cross product and light vector calculations
+	VECTOR4D u, v, n, l, s; // used for cross product and light vector calculations
 
 	//Write_Error("\nEntering lighting function");
 
@@ -3676,8 +3666,7 @@ int Light_RENDERLIST4DV2_World2(RENDERLIST4DV2_PTR rend_list,  // list to proces
 		r_sum0, g_sum0, b_sum0,
 		r_sum1, g_sum1, b_sum1,
 		r_sum2, g_sum2, b_sum2,
-		ri, gi, bi,
-		shaded_color;            // final color
+		ri, gi, bi;
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -3686,7 +3675,7 @@ int Light_RENDERLIST4DV2_World2(RENDERLIST4DV2_PTR rend_list,  // list to proces
 		nl,     // length of normal
 		atten;  // attenuation computations
 
-	VECTOR4D u, v, n, l, d, s; // used for cross product and light vector calculations
+	VECTOR4D u, v, n, l, s; // used for cross product and light vector calculations
 
 	//Write_Error("\nEntering lighting function");
 
@@ -4628,7 +4617,6 @@ void Transform_LIGHTSV2(LIGHTV2_PTR lights,  // array of lights to transform
 		for (curr_light = 0; curr_light < num_lights; curr_light++) {
 			// transform each local/world light and place the results into the transformed
 			// storage, this is the usual way the function will be called
-			POINT4D presult; // hold result of each transformation
 
 			// transform point position of each light
 			Mat_Mul_VECTOR4D_4X4(&lights[curr_light].pos, mt, &lights[curr_light].tpos);

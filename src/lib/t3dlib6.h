@@ -706,7 +706,7 @@ int IsInt(char *istring)
 	while (isdigit(*string)) string++;
 
 	// the string better be the same size as the other one
-	if (strlen(istring) == (int)(string - istring))
+	if (strlen(istring) == (unsigned int)(string - istring))
 		return(atoi(istring));
 	else
 		return(INT_MIN);
@@ -752,7 +752,7 @@ float IsFloat(char *fstring)
 	}
 
 	// the string better be the same size as the other one
-	if (strlen(fstring) == (int)(string - fstring))
+	if (strlen(fstring) == (unsigned int)(string - fstring))
 		return(atof(fstring));
 	else
 		return(FLT_MIN);
@@ -779,7 +779,7 @@ int CPARSERV1::Pattern_Match(char *string, const char *pattern, ...)
 	char token_type[PATTERN_MAX_ARGS];         // type of token, f,i,s,l
 	char token_string[PATTERN_MAX_ARGS][PATTERN_BUFFER_SIZE];   // for literal strings this holds them
 	char token_operator[PATTERN_MAX_ARGS];     // holds and operators for the token, >, <, =, etc.
-	int  token_numeric[PATTERN_MAX_ARGS];      // holds any numeric data to qualify the token
+	unsigned int token_numeric[PATTERN_MAX_ARGS];      // holds any numeric data to qualify the token
 
 	char buffer[PARSER_BUFFER_SIZE]; // working buffer
 
@@ -790,7 +790,7 @@ int CPARSERV1::Pattern_Match(char *string, const char *pattern, ...)
 	// copy line into working area
 	strcpy(buffer, string);
 
-	int tok_start = 0,
+	unsigned int tok_start = 0,
 		tok_end = 0,
 		tok_restart = 0,
 		tok_first_pass = 0,
@@ -954,7 +954,7 @@ int CPARSERV1::Pattern_Match(char *string, const char *pattern, ...)
 
 	// at this point we have the pattern we need to look for, so look for it
 	int pattern_state = PATTERN_STATE_INIT; // initial state for pattern recognizer
-	int curr_tok = 0;                 // test for num_tokens
+	unsigned int curr_tok = 0;                 // test for num_tokens
 	char token[PATTERN_BUFFER_SIZE];  // token under consideration
 
 	// enter scan state machine
@@ -1271,7 +1271,7 @@ int ReplaceChars(char *string_in, char *string_out, const char *replace_chars, c
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int StripChars(char *string_in, char *string_out, char *strip_chars, int case_on = 1)
+int StripChars(char *string_in, char *string_out, const char *strip_chars, int case_on = 1)
 {
 	// this function simply strips/extracts the characters from the input string that
 	// are listed in strip, the results are stored in string_out, string_in
@@ -1420,7 +1420,7 @@ int RGBto8BitIndex(UCHAR r, UCHAR g, UCHAR b, LPPALETTEENTRY palette, int flush_
 	{
 		UCHAR r, g, b;    // the rgb value of this translated color
 		UCHAR index;    // the color index that matched is most closely
-	} RGBINDEX, *RGBINDEX_PTR;
+	} RGBINDEX;
 
 	static RGBINDEX color_cache[COLOR_CACHE_SIZE];  // the color cache
 	static int cache_entries = 0;                     // number of entries in the cache
@@ -1483,7 +1483,7 @@ int RGBto8BitIndex(UCHAR r, UCHAR g, UCHAR b, LPPALETTEENTRY palette, int flush_
 ///////////////////////////////////////////////////////////////////////////////
 
 int Load_OBJECT4DV1_3DSASC(OBJECT4DV1_PTR obj,   // pointer to object
-	char *filename,       // filename of ASC file
+	const char *filename,       // filename of ASC file
 	VECTOR4D_PTR scale,   // initial scaling factors
 	VECTOR4D_PTR pos,     // initial position
 	VECTOR4D_PTR rot,     // initial rotations
@@ -1709,9 +1709,6 @@ int Load_OBJECT4DV1_3DSASC(OBJECT4DV1_PTR obj,   // pointer to object
 // has to do with the edges and the vertex ordering
 // the material indicates the color, and has an 'a0' tacked on the end???
 
-	int  poly_surface_desc = 0; // ASC surface descriptor/material in this case
-	int  poly_num_verts = 0; // number of vertices for current poly (always 3)
-	char tmp_string[8];         // temp string to hold surface descriptor in and
 	// test if it need to be converted from hex
 
 	for (int poly = 0; poly < obj->num_polys; poly++) {
@@ -1734,13 +1731,11 @@ int Load_OBJECT4DV1_3DSASC(OBJECT4DV1_PTR obj,   // pointer to object
 
 				// insert polygon, check for winding order invert
 				if (vertex_flags & VERTEX_FLAGS_INVERT_WINDING_ORDER) {
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[3];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[1];
 				} // end if
 				else { // leave winding order alone
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[1];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[3];
@@ -1836,7 +1831,7 @@ int Load_OBJECT4DV1_3DSASC(OBJECT4DV1_PTR obj,   // pointer to object
 //////////////////////////////////////////////////////////////////////////////
 
 int Load_OBJECT4DV1_COB(OBJECT4DV1_PTR obj,   // pointer to object
-	char *filename,       // filename of Caligari COB file
+	const char *filename,       // filename of Caligari COB file
 	VECTOR4D_PTR scale,   // initial scaling factors
 	VECTOR4D_PTR pos,     // initial position
 	VECTOR4D_PTR rot,     // initial rotations
@@ -1851,12 +1846,6 @@ int Load_OBJECT4DV1_COB(OBJECT4DV1_PTR obj,   // pointer to object
 
 	// create a parser object
 	CPARSERV1 parser;
-
-	char seps[16];          // seperators for token scanning
-	char token_buffer[256]; // used as working buffer for token
-	char *token;            // pointer to next token
-
-	int r, g, b;              // working colors
 
 	// cache for texture vertices
 	VERTEX2DF texture_vertices[1024];
@@ -2238,8 +2227,6 @@ int Load_OBJECT4DV1_COB(OBJECT4DV1_PTR obj,   // pointer to object
 	// the ff is the flags, unused for now, has to do with holes
 	// the mm is the material index number 
 
-	int poly_surface_desc = 0; // ASC surface descriptor/material in this case
-	int poly_num_verts = 0; // number of vertices for current poly (always 3)
 	int num_materials_object = 0; // number of materials for this object
 
 	for (int poly = 0; poly < obj->num_polys; poly++) {
@@ -2293,13 +2280,11 @@ int Load_OBJECT4DV1_COB(OBJECT4DV1_PTR obj,   // pointer to object
 
 			   // insert polygon, check for winding order invert
 				if (vertex_flags & VERTEX_FLAGS_INVERT_WINDING_ORDER) {
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[4];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[0];
 				} // end if
 				else { // leave winding order alone
-					poly_num_verts = 3;
 					obj->plist[poly].vert[0] = parser.pints[0];
 					obj->plist[poly].vert[1] = parser.pints[2];
 					obj->plist[poly].vert[2] = parser.pints[4];
@@ -2748,15 +2733,11 @@ int Init_Light_LIGHTV1(int           index,      // index of light to create (0.
 int Reset_Lights_LIGHTV1(void)
 {
 	// this function simply resets all lights in the system
-	static int first_time = 1;
 
 	memset(lights, 0, MAX_LIGHTS * sizeof(LIGHTV1));
 
 	// reset number of lights
 	num_lights = 0;
-
-	// reset first time
-	first_time = 0;
 
 	// return success
 	return(1);
@@ -3365,7 +3346,7 @@ int Light_OBJECT4DV1_World16(OBJECT4DV1_PTR obj,  // object to process
 
 									// we need to compute the normal of this polygon face, and recall
 									// that the vertices are in cw order, u=p0->p1, v=p0->p2, n=uxv
-									VECTOR4D u, v, n, d, s;
+									VECTOR4D u, v, n, s;
 
 									// build u, v
 									VECTOR4D_Build(&obj->vlist_trans[vindex_0], &obj->vlist_trans[vindex_1], &u);
@@ -3716,7 +3697,7 @@ int Light_OBJECT4DV1_World(OBJECT4DV1_PTR obj,  // object to process
 
 									// we need to compute the normal of this polygon face, and recall
 									// that the vertices are in cw order, u=p0->p1, v=p0->p2, n=uxv
-									VECTOR4D u, v, n, d, s;
+									VECTOR4D u, v, n, s;
 
 									// build u, v
 									VECTOR4D_Build(&obj->vlist_trans[vindex_0], &obj->vlist_trans[vindex_1], &u);
@@ -3829,8 +3810,7 @@ int Light_RENDERLIST4DV1_World16(RENDERLIST4DV1_PTR rend_list,  // list to proce
 	// immediately written over the real color
 
 	unsigned int r_base, g_base, b_base,  // base color being lit
-		r_sum, g_sum, b_sum,   // sum of lighting process over all lights
-		shaded_color;            // final color
+		r_sum, g_sum, b_sum;   // sum of lighting process over all lights
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -4066,7 +4046,7 @@ int Light_RENDERLIST4DV1_World16(RENDERLIST4DV1_PTR rend_list,  // list to proce
 
 									// we need to compute the normal of this polygon face, and recall
 									// that the vertices are in cw order, u=p0->p1, v=p0->p2, n=uxv
-									VECTOR4D u, v, n, d, s;
+									VECTOR4D u, v, n, s;
 
 									// build u, v
 									VECTOR4D_Build(&curr_poly->tvlist[0], &curr_poly->tvlist[1], &u);
@@ -4180,8 +4160,7 @@ int Light_RENDERLIST4DV1_World(RENDERLIST4DV1_PTR rend_list,  // list to process
 	// immediately written over the real color
 
 	unsigned int r_base, g_base, b_base,  // base color being lit
-		r_sum, g_sum, b_sum,   // sum of lighting process over all lights
-		shaded_color;            // final color
+		r_sum, g_sum, b_sum;   // sum of lighting process over all lights
 
 	float dp,     // dot product 
 		dist,   // distance from light to surface
@@ -4405,7 +4384,7 @@ int Light_RENDERLIST4DV1_World(RENDERLIST4DV1_PTR rend_list,  // list to process
 
 									// we need to compute the normal of this polygon face, and recall
 									// that the vertices are in cw order, u=p0->p1, v=p0->p2, n=uxv
-									VECTOR4D u, v, n, d, s;
+									VECTOR4D u, v, n, s;
 
 									// build u, v
 									VECTOR4D_Build(&curr_poly->tvlist[0], &curr_poly->tvlist[1], &u);

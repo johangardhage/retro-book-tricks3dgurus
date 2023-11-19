@@ -200,10 +200,10 @@ void Bsp_Build_Tree(BSPNODEV1_PTR root)
 
 	static float dot_wall_1,              // dot products for test wall
 		dot_wall_2,
-		wall_x0, wall_y0, wall_z0, // working vars for test wall
-		wall_x1, wall_y1, wall_z1,
-		pp_x0, pp_y0, pp_z0,       // working vars for partitioning plane
-		pp_x1, pp_y1, pp_z1,
+		wall_x0, wall_z0, // working vars for test wall
+		wall_x1, wall_z1,
+		pp_x0, pp_z0,       // working vars for partitioning plane
+		pp_x1, pp_z1,
 		xi, zi;                   // points of intersection when the partioning
 	// plane cuts a wall in two
 
@@ -228,11 +228,9 @@ void Bsp_Build_Tree(BSPNODEV1_PTR root)
 
 	// extract top two vertices of partioning plane wall for ease of calculations
 	pp_x0 = root->wall.vlist[0].x;
-	pp_y0 = root->wall.vlist[0].y;
 	pp_z0 = root->wall.vlist[0].z;
 
 	pp_x1 = root->wall.vlist[1].x;
-	pp_y1 = root->wall.vlist[1].y;
 	pp_z1 = root->wall.vlist[1].z;
 
 	// SECTION 2  ////////////////////////////////////////////////////////////////
@@ -372,11 +370,9 @@ void Bsp_Build_Tree(BSPNODEV1_PTR root)
 
 					// extract top two vertices of test wall for ease of calculations
 					wall_x0 = next_wall->wall.vlist[0].x;
-					wall_y0 = next_wall->wall.vlist[0].y;
 					wall_z0 = next_wall->wall.vlist[0].z;
 
 					wall_x1 = next_wall->wall.vlist[1].x;
-					wall_y1 = next_wall->wall.vlist[1].y;
 					wall_z1 = next_wall->wall.vlist[1].z;
 
 					// compute the point of intersection between the walls
@@ -1633,8 +1629,6 @@ void Bsp_Transform(BSPNODEV1_PTR root,  // root of bsp tree
 		// transform each local/model vertex of the object mesh and store result
 		// in "transformed" vertex list
 		for (int vertex = 0; vertex < 4; vertex++) {
-			POINT4D presult; // hold result of each transformation
-
 			// transform point
 			Mat_Mul_VECTOR4D_4X4(&root->wall.vlist[vertex].v, mt, &root->wall.tvlist[vertex].v);
 
@@ -1756,12 +1750,9 @@ void Draw_Textured_TriangleWTZB2_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -1789,7 +1780,6 @@ void Draw_Textured_TriangleWTZB2_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -2662,12 +2652,9 @@ void Draw_Textured_TriangleFSWTZB2_16(POLYF4DV2_PTR face, // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,            // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -2698,7 +2685,6 @@ void Draw_Textured_TriangleFSWTZB2_16(POLYF4DV2_PTR face, // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -3656,12 +3642,9 @@ void Draw_Textured_TriangleGSWTZB_16(POLYF4DV2_PTR face,   // ptr to face
 
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z, s, t,
 		du, dv, dw, dz, ds, dt,
 		xi, yi,             // the current interpolated x,y
 		ui, vi, wi, zi, si, ti,    // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -3709,7 +3692,6 @@ void Draw_Textured_TriangleGSWTZB_16(POLYF4DV2_PTR face,   // ptr to face
 	USHORT textel;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -5011,12 +4993,9 @@ void Draw_Triangle_2DWTZB_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		z,
 		dz,
 		xi, yi,              // the current interpolated x,y
 		zi,                 // the current interpolated z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -5036,8 +5015,6 @@ void Draw_Triangle_2DWTZB_16(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -5762,12 +5739,9 @@ void Draw_Gouraud_TriangleWTZB2_16(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z,
 		du, dv, dw, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, wi, zi,        // the current interpolated u,v,w,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -5803,8 +5777,6 @@ void Draw_Gouraud_TriangleWTZB2_16(POLYF4DV2_PTR face,   // ptr to face
 		r_base2, g_base2, b_base2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
-		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
 	UINT *z_ptr = NULL,
@@ -8713,7 +8685,7 @@ void BHV_Build_Tree(BHV_NODEV1_PTR bhv_tree,         // tree to build
 
 			BHV_Build_Tree(bhv_tree->links[inode],
 				NULL, // unused now
-				NULL, // unused now
+				0, // unused now
 				level + 1,
 				num_divisions,
 				universe_radius);

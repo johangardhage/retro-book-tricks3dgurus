@@ -30,12 +30,9 @@ void Draw_Textured_TriangleWTZB3_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -63,7 +60,6 @@ void Draw_Textured_TriangleWTZB3_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer,
 		textel;
@@ -956,12 +952,9 @@ void Draw_Textured_TriangleFSWTZB3_16(POLYF4DV2_PTR face, // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,            // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -992,7 +985,6 @@ void Draw_Textured_TriangleFSWTZB3_16(POLYF4DV2_PTR face, // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -1961,12 +1953,9 @@ void Draw_Textured_TriangleGSWTZB2_16(POLYF4DV2_PTR face,   // ptr to face
 
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, w, z, s, t,
 		du, dv, dw, dz, ds, dt,
 		xi, yi,             // the current interpolated x,y
 		ui, vi, wi, zi, si, ti,    // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -2014,7 +2003,6 @@ void Draw_Textured_TriangleGSWTZB2_16(POLYF4DV2_PTR face,   // ptr to face
 	USHORT textel;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer;
 
@@ -3324,12 +3312,9 @@ void Draw_Textured_Triangle_Alpha16_2(POLYF4DV2_PTR face,   // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v,
 		du, dv,
 		xi, yi,              // the current interpolated x,y
 		ui, vi,              // the current interpolated u,v
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -3353,7 +3338,6 @@ void Draw_Textured_Triangle_Alpha16_2(POLYF4DV2_PTR face,   // ptr to face
 		x2, y2, tu2, tv2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer,
 		textel;
@@ -4137,12 +4121,9 @@ void Draw_Textured_TriangleZB_Alpha16_2(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -4170,7 +4151,6 @@ void Draw_Textured_TriangleZB_Alpha16_2(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer,
 		textel;
@@ -4483,7 +4463,7 @@ void Draw_Textured_TriangleZB_Alpha16_2(POLYF4DV2_PTR face,  // ptr to face
 
 					if (textel) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[textel];
@@ -4560,7 +4540,7 @@ void Draw_Textured_TriangleZB_Alpha16_2(POLYF4DV2_PTR face,  // ptr to face
 
 					if (textel) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 								alpha_table_src2[textel];
@@ -4851,7 +4831,7 @@ void Draw_Textured_TriangleZB_Alpha16_2(POLYF4DV2_PTR face,  // ptr to face
 
 						if (textel) {
 							// test if z of current pixel is nearer than current z buffer value
-							if (zi < z_ptr[xi]) {
+							if ((unsigned int)zi < z_ptr[xi]) {
 								// write textel
 								screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 									alpha_table_src2[textel];
@@ -4977,7 +4957,7 @@ void Draw_Textured_TriangleZB_Alpha16_2(POLYF4DV2_PTR face,  // ptr to face
 
 						if (textel) {
 							// test if z of current pixel is nearer than current z buffer value
-							if (zi < z_ptr[xi]) {
+							if ((unsigned int)zi < z_ptr[xi]) {
 								// write textel
 								screen_ptr[xi] = alpha_table_src1[screen_ptr[xi]] +
 									alpha_table_src2[textel];
@@ -5089,12 +5069,9 @@ void Draw_Textured_TriangleWTZB_Alpha16_2(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -5122,7 +5099,6 @@ void Draw_Textured_TriangleWTZB_Alpha16_2(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer,
 		textel;
@@ -6029,12 +6005,9 @@ void Draw_Textured_TriangleZB3_16(POLYF4DV2_PTR face,  // ptr to face
 		irestart = INTERP_LHS;
 
 	int dx, dy, dyl, dyr,      // general deltas
-		u, v, z,
 		du, dv, dz,
 		xi, yi,              // the current interpolated x,y
 		ui, vi, zi,           // the current interpolated u,v,z
-		index_x, index_y,    // looping vars
-		x, y,                // hold general x,y
 		xstart,
 		xend,
 		ystart,
@@ -6062,7 +6035,6 @@ void Draw_Textured_TriangleZB3_16(POLYF4DV2_PTR face,  // ptr to face
 		x2, y2, tu2, tv2, tz2;
 
 	USHORT *screen_ptr = NULL,
-		*screen_line = NULL,
 		*textmap = NULL,
 		*dest_buffer = (USHORT *)_dest_buffer,
 		textel;
@@ -6369,7 +6341,7 @@ SWAP(v1, v2, temp);
 
 					if (textel) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textel;
 
@@ -6443,7 +6415,7 @@ SWAP(v1, v2, temp);
 
 					if (textel) {
 						// test if z of current pixel is nearer than current z buffer value
-						if (zi < z_ptr[xi]) {
+						if ((unsigned int)zi < z_ptr[xi]) {
 							// write textel
 							screen_ptr[xi] = textel;
 
@@ -6730,7 +6702,7 @@ SWAP(v1, v2, temp);
 
 						if (textel) {
 							// test if z of current pixel is nearer than current z buffer value
-							if (zi < z_ptr[xi]) {
+							if ((unsigned int)zi < z_ptr[xi]) {
 								// write textel
 								screen_ptr[xi] = textel;
 
@@ -6851,7 +6823,7 @@ SWAP(v1, v2, temp);
 
 						if (textel) {
 							// test if z of current pixel is nearer than current z buffer value
-							if (zi < z_ptr[xi]) {
+							if ((unsigned int)zi < z_ptr[xi]) {
 								// write textel
 								screen_ptr[xi] = textel;
 
