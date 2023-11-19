@@ -55,7 +55,7 @@ void DEMO_Render2(double deltatime)
 void DEMO_Initialize(void)
 {
 	// Initialize T3DLIB
-	T3DLIB_Init();
+	T3DLIB_Init(true);
 
 	// seed random number generator
 	srand(Start_Clock());

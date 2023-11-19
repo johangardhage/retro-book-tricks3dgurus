@@ -5831,7 +5831,7 @@ inline void Draw_QuadFP_2D(int x0, int y0,
 
 /////////////////////////////////////////////////////////////////
 
-int T3DLIB_Init(int lookup_format = DD_PIXEL_FORMAT565)
+int T3DLIB_Init(bool small_clip_area = false, int lookup_format = DD_PIXEL_FORMAT565)
 {
 	if (lookup_format == DD_PIXEL_FORMAT565) {
 		RETRO_InitFrameBuffer(SDL_PIXELFORMAT_ARGB8888);
@@ -5849,10 +5849,17 @@ int T3DLIB_Init(int lookup_format = DD_PIXEL_FORMAT565)
 	framebuffer = RETRO.framebuffer;
 	framebuffer_pitch = screen_width;
 
-	min_clip_x = 0;
-	max_clip_x = screen_width;
-	min_clip_y = 0;
-	max_clip_y = screen_height;
+	if (small_clip_area) {
+		min_clip_x = 0;
+		max_clip_x = screen_width - 1;
+		min_clip_y = 0;
+		max_clip_y = screen_height - 1;
+	} else {
+		min_clip_x = 0;
+		max_clip_x = screen_width;
+		min_clip_y = 0;
+		max_clip_y = screen_height;
+	}
 
 	memset(palette, 0, MAX_COLORS_PALETTE * sizeof(PALETTEENTRY));
 	Load_Palette_From_File(DEFAULT_PALETTE_FILE, palette);
@@ -5864,7 +5871,7 @@ int T3DLIB_Init(int lookup_format = DD_PIXEL_FORMAT565)
 
 /////////////////////////////////////////////////////////////////
 
-int T3DLIB_Init16(int pixel_format = DD_PIXEL_FORMAT565)
+int T3DLIB_Init16(bool small_clip_area = false, int pixel_format = DD_PIXEL_FORMAT565)
 {
 	if (pixel_format == DD_PIXEL_FORMAT565) {
 		RETRO_InitFrameBuffer(SDL_PIXELFORMAT_RGB565);
@@ -5882,10 +5889,17 @@ int T3DLIB_Init16(int pixel_format = DD_PIXEL_FORMAT565)
 	framebuffer = RETRO.framebuffer;
 	framebuffer_pitch = screen_width * 2;
 
-	min_clip_x = 0;
-	max_clip_x = screen_width;
-	min_clip_y = 0;
-	max_clip_y = screen_height;
+	if (small_clip_area) {
+		min_clip_x = 0;
+		max_clip_x = screen_width - 1;
+		min_clip_y = 0;
+		max_clip_y = screen_height - 1;
+	} else {
+		min_clip_x = 0;
+		max_clip_x = screen_width;
+		min_clip_y = 0;
+		max_clip_y = screen_height;
+	}
 
 	// return success
 	return(1);

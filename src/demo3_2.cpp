@@ -278,7 +278,7 @@ void DEMO_Render(double deltatime)
 void DEMO_Initialize(void)
 {
 	// Initialize T3DLIB
-	T3DLIB_Init();
+	T3DLIB_Init(true);
 
 	// seed random number generate
 	srand(Start_Clock());

@@ -112,7 +112,7 @@ void DEMO_Render(double deltatime)
 void DEMO_Initialize(void)
 {
 	// Initialize T3DLIB
-	T3DLIB_Init16();
+	T3DLIB_Init16(true);
 
 	// load in the textures
 	Load_Bitmap_File(&bitmap16bit, "assets/omptxt128_24.bmp");
